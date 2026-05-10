@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,26 +31,27 @@
       text-align: center;
       border-bottom: 4px solid var(--gold);
     }
-    nav {
-  background: #C8A24A;
-  padding: 12px;
-  text-align: center;
-}
-
-nav a {
-  color: #0F1B2D;
-  text-decoration: none;
-  margin: 0 15px;
-  font-weight: bold;
-}
-
-nav a:hover {
-  opacity: 0.7;
-}
 
     header h1 {
       margin: 0;
       letter-spacing: 2px;
+    }
+
+    nav {
+      background: var(--gold);
+      padding: 12px;
+      text-align: center;
+    }
+
+    nav a {
+      color: var(--navy);
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      opacity: 0.7;
     }
 
     .container {
@@ -78,9 +80,20 @@ nav a:hover {
       gap: 10px;
     }
 
-    .green { color: var(--green); font-weight: bold; }
-    .yellow { color: var(--gold); font-weight: bold; }
-    .red { color: var(--red); font-weight: bold; }
+    .green {
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    .yellow {
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    .red {
+      color: var(--red);
+      font-weight: bold;
+    }
 
     table {
       width: 100%;
@@ -106,8 +119,15 @@ nav a:hover {
       color: #666;
     }
 
-    .status {
-      font-weight: bold;
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      nav a {
+        display: inline-block;
+        margin: 5px 10px;
+      }
     }
   </style>
 </head>
@@ -115,37 +135,54 @@ nav a:hover {
 <body>
 
 <header>
- <nav>
+  <h1>MERCY ARM</h1>
+  <p>Stewardship System • James 1:27</p>
+</header>
+
+<nav>
   <a href="#">Dashboard</a>
   <a href="#">Vault</a>
   <a href="#">Ledger</a>
   <a href="#">Signals</a>
   <a href="#">Charter</a>
-</nav> 
-  <h1>MERCY ARM</h1>
-  <p>Stewardship System • James 1:27</p>
-</header>
+</nav>
 
 <div class="container">
 
   <!-- VAULT -->
   <div class="card">
     <h2>Mercy Vault</h2>
-    <p><strong>Balance:</strong> <span id="balance">Loading...</span></p>
-    <p><strong>Preservation Floor:</strong> <span id="floor">Loading...</span></p>
-    <p><strong>Available:</strong> <span id="available">Loading...</span></p>
+
+    <p>
+      <strong>Balance:</strong>
+      <span id="balance">Loading...</span>
+    </p>
+
+    <p>
+      <strong>Preservation Floor:</strong>
+      <span id="floor">Loading...</span>
+    </p>
+
+    <p>
+      <strong>Available:</strong>
+      <span id="available">Loading...</span>
+    </p>
   </div>
+
+  <!-- SYSTEM STATUS -->
   <div class="card">
-  <h2>System Status</h2>
-  <p><strong>Mode:</strong> Manual Stewardship</p>
-  <p><strong>Automation:</strong> Disabled</p>
-  <p><strong>Witness Review:</strong> Pending</p>
-  <p><strong>System Integrity:</strong> Active</p>
-</div>
+    <h2>System Status</h2>
+
+    <p><strong>Mode:</strong> Manual Stewardship</p>
+    <p><strong>Automation:</strong> Disabled</p>
+    <p><strong>Witness Review:</strong> Pending</p>
+    <p><strong>System Integrity:</strong> Active</p>
+  </div>
 
   <!-- SIGNALS -->
   <div class="card">
     <h2>Mercy Signal Board</h2>
+
     <div class="grid">
       <p>MED: <span id="med"></span></p>
       <p>EDU: <span id="edu"></span></p>
@@ -158,6 +195,7 @@ nav a:hover {
   <!-- LEDGER -->
   <div class="card">
     <h2>Mercy Ledger</h2>
+
     <table>
       <thead>
         <tr>
@@ -167,30 +205,43 @@ nav a:hover {
           <th>Amount</th>
         </tr>
       </thead>
+
       <tbody id="ledgerTable"></tbody>
     </table>
   </div>
-<!-- ANALYTICS -->
-<div class="card">
-  <h2>Mercy Analytics</h2>
 
-  <p><strong>Total Cases:</strong> <span id="totalCases">0</span></p>
+  <!-- ANALYTICS -->
+  <div class="card">
+    <h2>Mercy Analytics</h2>
 
-  <p><strong>Total Distributed:</strong>
-    <span id="totalAmount">₦0</span>
-  </p>
+    <p>
+      <strong>Total Cases:</strong>
+      <span id="totalCases">0</span>
+    </p>
 
-  <p><strong>Repeat Recipients:</strong>
-    <span id="repeatCount">0</span>
-  </p>
+    <p>
+      <strong>Total Distributed:</strong>
+      <span id="totalAmount">₦0</span>
+    </p>
 
-  <p><strong>Vault Pressure:</strong>
-    <span id="vaultPressure">Stable</span>
-  </p>
-</diTTERN-- PATTERNS -->
+    <p>
+      <strong>Repeat Recipients:</strong>
+      <span id="repeatCount">0</span>
+    </p>
+
+    <p>
+      <strong>Vault Pressure:</strong>
+      <span id="vaultPressure">Stable</span>
+    </p>
+  </div>
+
+  <!-- PATTERNS -->
   <div class="card">
     <h2>Pattern Insight</h2>
-    <p id="patternText">Loading pattern intelligence...</p>
+
+    <p id="patternText">
+      Loading pattern intelligence...
+    </p>
   </div>
 
 </div>
@@ -202,144 +253,178 @@ nav a:hover {
 <script>
 async function loadData() {
 
-  const vault = await fetch('vault.json').then(r => r.json());
-  const ledger = await fetch('ledger.json').then(r => r.json());
+  try {
 
-  // VAULT
-  const floor = vault.balance * (vault.preservation_floor_percent / 100);
-  const available = vault.balance - floor;
+    const vault = await fetch('vault.json').then(r => r.json());
+    const ledger = await fetch('ledger.json').then(r => r.json());
 
-  document.getElementById("balance").innerText = "₦" + vault.balance;
-  document.getElementById("floor").innerText = "₦" + floor;
-  document.getElementById("available").innerText = "₦" + available;
+    // VAULT
+    const floor =
+      vault.balance * (vault.preservation_floor_percent / 100);
 
-  // CATEGORY COUNTS
-  let counts = {
-    MED: 0,
-    EDU: 0,
-    SHE: 0,
-    FOO: 0,
-    EMR: 0
-  };
+    const available =
+      vault.balance - floor;
 
-  // LEDGER TABLE
-  const table = document.getElementById("ledgerTable");
-  table.innerHTML = "";
+    document.getElementById("balance").innerText =
+      "₦" + vault.balance;
 
-  ledger.forEach(item => {
+    document.getElementById("floor").innerText =
+      "₦" + floor;
 
-    // Count categories
-    if (counts[item.category] !== undefined) {
-      counts[item.category]++;
+    document.getElementById("available").innerText =
+      "₦" + available;
+
+    // CATEGORY COUNTS
+    let counts = {
+      MED: 0,
+      EDU: 0,
+      SHE: 0,
+      FOO: 0,
+      EMR: 0
+    };
+
+    // ANALYTICS
+    let totalAmount = 0;
+    let recipientTracker = {};
+    let repeatRecipients = 0;
+
+    // LEDGER TABLE
+    const table =
+      document.getElementById("ledgerTable");
+
+    table.innerHTML = "";
+
+    ledger.forEach(item => {
+
+      // CATEGORY COUNT
+      if (counts[item.category] !== undefined) {
+        counts[item.category]++;
+      }
+
+      // TOTAL DISTRIBUTED
+      totalAmount += item.amount;
+
+      // RECIPIENT TRACKING
+      if (recipientTracker[item.recipient]) {
+        recipientTracker[item.recipient]++;
+      } else {
+        recipientTracker[item.recipient] = 1;
+      }
+
+      // ADD ROW
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${item.date}</td>
+        <td>${item.recipient}</td>
+        <td>${item.category}</td>
+        <td>₦${item.amount}</td>
+      `;
+
+      table.appendChild(row);
+    });
+
+    // SIGNAL LOGIC
+    function signalLevel(count) {
+      if (count >= 3) return "RED";
+      if (count >= 2) return "YELLOW";
+      return "GREEN";
     }
-// Total distributed
-totalAmount += item.amount;
 
-// Track recipients
-if (recipientTracker[item.recipient]) {
-  recipientTracker[item.recipient]++;
-} else {
-  recipientTracker[item.recipient] = 1;
-}
-    // Add rows
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${item.date}</td>
-      <td>${item.recipient}</td>
-      <td>${item.category}</td>
-      <td>₦${item.amount}</td>
-    `;
-    table.appendChild(row);
-  });
+    const medSignal = signalLevel(counts.MED);
+    const eduSignal = signalLevel(counts.EDU);
+    const sheSignal = signalLevel(counts.SHE);
+    const fooSignal = signalLevel(counts.FOO);
+    const emrSignal = signalLevel(counts.EMR);
 
-  // SIGNAL LOGIC
-  function signalLevel(count) {
-    if (count >= 3) return "RED";
-    if (count >= 2) return "YELLOW";
-    return "GREEN";
+    // APPLY SIGNAL COLORS
+    function applySignal(id, value) {
+
+      const el =
+        document.getElementById(id);
+
+      el.innerText = value;
+
+      if (value === "RED") {
+        el.className = "red";
+      } else if (value === "YELLOW") {
+        el.className = "yellow";
+      } else {
+        el.className = "green";
+      }
+    }
+
+    applySignal("med", medSignal);
+    applySignal("edu", eduSignal);
+    applySignal("she", sheSignal);
+    applySignal("foo", fooSignal);
+    applySignal("emr", emrSignal);
+
+    // PATTERN ENGINE
+    let insights = [];
+
+    if (counts.MED >= 2) {
+      insights.push("Medical requests increasing.");
+    }
+
+    if (counts.SHE >= 2) {
+      insights.push("Shelter instability pattern detected.");
+    }
+
+    if (counts.EDU >= 2) {
+      insights.push("Education support requests rising.");
+    }
+
+    // REPEAT RECIPIENT DETECTION
+    Object.values(recipientTracker).forEach(count => {
+      if (count > 1) {
+        repeatRecipients++;
+      }
+    });
+
+    if (repeatRecipients > 0) {
+      insights.push("Repeat recipient pattern detected.");
+    }
+
+    if (insights.length === 0) {
+      insights.push("No major structural patterns detected.");
+    }
+
+    // ANALYTICS OUTPUT
+    document.getElementById("totalCases").innerText =
+      ledger.length;
+
+    document.getElementById("totalAmount").innerText =
+      "₦" + totalAmount;
+
+    document.getElementById("repeatCount").innerText =
+      repeatRecipients;
+
+    // VAULT PRESSURE
+    let vaultStatus = "Stable";
+
+    if (available < floor * 1.2) {
+      vaultStatus = "Warning";
+    }
+
+    if (available <= floor) {
+      vaultStatus = "Critical";
+    }
+
+    document.getElementById("vaultPressure").innerText =
+      vaultStatus;
+
+    // PATTERN OUTPUT
+    document.getElementById("patternText").innerHTML =
+      insights.join("<br>");
+
+  } catch (error) {
+
+    console.log(error);
+
+    document.getElementById("patternText").innerText =
+      "Error loading Mercy ARM data.";
   }
-
-  // APPLY SIGNALS
-  const medSignal = signalLevel(counts.MED);
-  const eduSignal = signalLevel(counts.EDU);
-  const sheSignal = signalLevel(counts.SHE);
-  const fooSignal = signalLevel(counts.FOO);
-  const emrSignal = signalLevel(counts.EMR);
-
-  function applySignal(id, value) {
-  const el = document.getElementById(id);
-
-  el.innerText = value;
-
-  if (value === "RED") {
-    el.className = "red";
-  } else if (value === "YELLOW") {
-    el.className = "yellow";
-  } else {
-    el.className = "green";
-  }
-}
-
-applySignal("med", medSignal);
-applySignal("edu", eduSignal);
-applySignal("she", sheSignal);
-applySignal("foo", fooSignal);
-applySignal("emr", emrSignal);
-  // PA// ANALYTICS
-let totalAmount = 0;
-let recipientTracker = {};
-let repeatRecipients = 0;TTERN ENGINE
-  let insights = [];
-
-  if (counts.MED >= 2) {
-    insights.push("Medical requests increasing.");
-  }
-
-  if (counts.SHE >= 2) {
-    insights.push("Shelter instability pattern detected.");
-  }
-
-  if (counts.EDU >= 2) {
-    insights.push("Education support requests rising.");
-  }
-// Repeat recipient detection
-Object.values(recipientTracker).forEach(count => {
-  if (count > 1) {
-    repeatRecipients++;
-  }
-});
-
-// Dependency insight
-if (repeatRecipients > 0) {
-  insights.push("Repeat recipient pattern detected.");
-}
-  if (insights.length === 0) {
-    insights.push("No major structural patterns detected.");
-  }
-// ANALYTICS OUTPUT
-document.getElementById("totalCases").innerText = ledger.length;
-
-document.getElementById("totalAmount").innerText =
-  "₦" + totalAmount;
-
-document.getElementById("repeatCount").innerText =
-  repeatRecipients;
-
-// Vault pressure
-let vaultStatus = "Stable";
-
-if (available < floor * 1.2) {
-  vaultStatus = "Warning";
-}
-
-if (available <= floor) {
-  vaultStatus = "Critical";
-}
-
-document.getElementById("vaultPressure").innerText =
-  vaultStatus;
-  document.getElementById("patternText").innerHTML =
-    insights.join("<br>");
 }
 
 loadData();
