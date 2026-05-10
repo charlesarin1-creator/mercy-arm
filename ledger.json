@@ -1,12 +1,32 @@
 [
   {
-    "date": "2026-05-10",
-    "recipient": "Sample Widow",
+    "date": "2026-05-01",
+    "recipient": "Widow A",
     "category": "SHE",
-    "amount": 5000,
-    "purpose": "Rent support",
-    "verification": "Manual confirmation",
-    "exception": false,
-    "impact_note": "Temporary shelter secured"
+    "amount": 5000
+  },
+  {
+    "date": "2026-05-03",
+    "recipient": "Child B",
+    "category": "EDU",
+    "amount": 3000
+  },
+  {
+    "date": "2026-05-05",
+    "recipient": "Widow C",
+    "category": "MED",
+    "amount": 7000
+  },
+  {
+    "date": "2026-05-07",
+    "recipient": "Widow D",
+    "category": "MED",
+    "amount": 4000
+  },
+  {
+    "date": "2026-05-09",
+    "recipient": "Child E",
+    "category": "SHE",
+    "amount": 6000
   }
 ]
