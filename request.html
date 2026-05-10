@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MERCY REQUEST PORTAL</title>
+
+  <style>
+    :root {
+      --gold: #C8A24A;
+      --navy: #0F1B2D;
+      --green: #2E7D5B;
+      --red: #B3261E;
+      --gray: #F4F4F4;
+      --text: #2B2B2B;
+    }
+
+    body {
+      margin: 0;
+      background: var(--gray);
+      font-family: Arial, sans-serif;
+      color: var(--text);
+    }
+
+    header {
+      background: var(--navy);
+      color: white;
+      padding: 25px;
+      text-align: center;
+      border-bottom: 4px solid var(--gold);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-left: 5px solid var(--gold);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: var(--navy);
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 20px;
+      background: var(--navy);
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    pre {
+      background: #111;
+      color: #00ff88;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-top: 15px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #666;
+      margin-top: 10px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>MERCY REQUEST PORTAL</h1>
+  <p>James 1:27 — Structured Mercy Intake System</p>
+</header>
+
+<div class="container">
+
+  <div class="card">
+
+    <h2>Submit Mercy Request</h2>
+
+    <label>Full Name</label>
+    <input type="text" id="name" placeholder="Enter full name">
+
+    <label>Category</label>
+    <select id="category">
+      <option value="MED">Medical (MED)</option>
+      <option value="EDU">Education (EDU)</option>
+      <option value="SHE">Shelter (SHE)</option>
+      <option value="FOO">Food (FOO)</option>
+      <option value="EMR">Emergency (EMR)</option>
+    </select>
+
+    <label>Location</label>
+    <input type="text" id="location" placeholder="City / Area">
+
+    <label>Need Description</label>
+    <textarea id="description" rows="4" placeholder="Explain the situation briefly"></textarea>
+
+    <label>Contact (Optional)</label>
+    <input type="text" id="contact" placeholder="Phone or WhatsApp">
+
+    <button onclick="generateRequest()">Generate Request</button>
+
+    <pre id="output">Your structured request will appear here...</pre>
+
+    <p class="note">
+      Note: Submission does not guarantee approval. All requests are reviewed under governance rules.
+    </p>
+
+  </div>
+
+</div>
+
+<script>
+
+function generateRequest() {
+
+  const request = {
+
+    date: new Date().toISOString().split("T")[0],
+
+    name: document.getElementById("name").value,
+
+    category: document.getElementById("category").value,
+
+    location: document.getElementById("location").value,
+
+    description: document.getElementById("description").value,
+
+    contact: document.getElementById("contact").value,
+
+    status: "PENDING_REVIEW"
+
+  };
+
+  document.getElementById("output").innerText =
+    JSON.stringify(request, null, 2);
+}
+
+</script>
+
+</body>
+</html>
