@@ -242,12 +242,25 @@ async function loadData() {
   const fooSignal = signalLevel(counts.FOO);
   const emrSignal = signalLevel(counts.EMR);
 
-  document.getElementById("med").innerText = medSignal;
-  document.getElementById("edu").innerText = eduSignal;
-  document.getElementById("she").innerText = sheSignal;
-  document.getElementById("foo").innerText = fooSignal;
-  document.getElementById("emr").innerText = emrSignal;
+  function applySignal(id, value) {
+  const el = document.getElementById(id);
 
+  el.innerText = value;
+
+  if (value === "RED") {
+    el.className = "red";
+  } else if (value === "YELLOW") {
+    el.className = "yellow";
+  } else {
+    el.className = "green";
+  }
+}
+
+applySignal("med", medSignal);
+applySignal("edu", eduSignal);
+applySignal("she", sheSignal);
+applySignal("foo", fooSignal);
+applySignal("emr", emrSignal);
   // PATTERN ENGINE
   let insights = [];
 
