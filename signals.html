@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MERCY ARM SIGNALS</title>
+
+  <style>
+    :root {
+      --gold: #C8A24A;
+      --navy: #0F1B2D;
+      --green: #2E7D5B;
+      --red: #B3261E;
+      --gray: #F4F4F4;
+      --text: #2B2B2B;
+    }
+
+    body {
+      margin: 0;
+      background: var(--gray);
+      font-family: Arial, sans-serif;
+      color: var(--text);
+    }
+
+    header {
+      background: var(--navy);
+      color: white;
+      padding: 25px;
+      text-align: center;
+      border-bottom: 4px solid var(--gold);
+    }
+
+    nav {
+      background: var(--gold);
+      padding: 12px;
+      text-align: center;
+    }
+
+    nav a {
+      color: var(--navy);
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .signal-card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      border-left: 5px solid var(--gold);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: var(--navy);
+    }
+
+    .signal {
+      font-size: 30px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .green {
+      color: var(--green);
+    }
+
+    .yellow {
+      color: var(--gold);
+    }
+
+    .red {
+      color: var(--red);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #777;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>MERCY ARM SIGNALS</h1>
+  <p>Category Pressure Monitoring System</p>
+</header>
+
+<nav>
+  <a href="index.html">Dashboard</a>
+  <a href="vault.html">Vault</a>
+  <a href="signals.html">Signals</a>
+  <a href="ledger.html">Ledger</a>
+  <a href="charter.html">Charter</a>
+  <a href="console.html">Console</a>
+</nav>
+
+<div class="container">
+
+  <div class="signal-card">
+    <h2>MED — Medical</h2>
+    <div class="signal" id="med"></div>
+  </div>
+
+  <div class="signal-card">
+    <h2>EDU — Education</h2>
+    <div class="signal" id="edu"></div>
+  </div>
+
+  <div class="signal-card">
+    <h2>SHE — Shelter</h2>
+    <div class="signal" id="she"></div>
+  </div>
+
+  <div class="signal-card">
+    <h2>FOO — Food</h2>
+    <div class="signal" id="foo"></div>
+  </div>
+
+  <div class="signal-card">
+    <h2>EMR — Emergency</h2>
+    <div class="signal" id="emr"></div>
+  </div>
+
+</div>
+
+<footer>
+  Mercy ARM Signals • Pattern Detection Active
+</footer>
+
+<script>
+
+async function loadSignals() {
+
+  const ledger =
+    await fetch('ledger.json').then(r => r.json());
+
+  let counts = {
+    MED: 0,
+    EDU: 0,
+    SHE: 0,
+    FOO: 0,
+    EMR: 0
+  };
+
+  ledger.forEach(item => {
+
+    if (counts[item.category] !== undefined) {
+      counts[item.category]++;
+    }
+
+  });
+
+  function signalLevel(count) {
+
+    if (count >= 3) return "RED";
+    if (count >= 2) return "YELLOW";
+
+    return "GREEN";
+  }
+
+  function applySignal(id, value) {
+
+    const el =
+      document.getElementById(id);
+
+    el.innerText = value;
+
+    if (value === "RED") {
+      el.className = "signal red";
+    }
+    else if (value === "YELLOW") {
+      el.className = "signal yellow";
+    }
+    else {
+      el.className = "signal green";
+    }
+  }
+
+  applySignal("med", signalLevel(counts.MED));
+  applySignal("edu", signalLevel(counts.EDU));
+  applySignal("she", signalLevel(counts.SHE));
+  applySignal("foo", signalLevel(counts.FOO));
+  applySignal("emr", signalLevel(counts.EMR));
+}
+
+loadSignals();
+
+</script>
+
+</body>
+</html>
