@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,11 +42,6 @@
       gap: 15px;
     }
 
-    .status {
-      font-size: 18px;
-      font-weight: bold;
-    }
-
     .green { color: green; }
     .yellow { color: goldenrod; }
     .red { color: red; }
@@ -82,47 +78,43 @@
   <!-- VAULT STATUS -->
   <div class="card">
     <h2>Mercy Vault Status</h2>
-    <p><strong>Balance:</strong> ₦15,320</p>
-    <p><strong>Preservation Floor (30%):</strong> ₦4,596</p>
-    <p><strong>Available for Mercy:</strong> ₦10,724</p>
-    <p class="status yellow">Status: STABLE</p>
+    <p><strong>Balance:</strong> <span id="balance">Loading...</span></p>
+    <p><strong>Preservation Floor:</strong> <span id="floor">Loading...</span></p>
+    <p><strong>Available for Mercy:</strong> <span id="available">Loading...</span></p>
   </div>
 
   <!-- SIGNAL PANEL -->
   <div class="card">
     <h2>Mercy Signal Board</h2>
     <div class="grid">
-      <p>MED: <span class="yellow">YELLOW</span></p>
-      <p>EDU: <span class="green">GREEN</span></p>
-      <p>SHE: <span class="red">RED</span></p>
-      <p>FOO: <span class="green">GREEN</span></p>
-      <p>EMR: <span class="yellow">YELLOW</span></p>
+      <p>MED: <span id="med">...</span></p>
+      <p>EDU: <span id="edu">...</span></p>
+      <p>SHE: <span id="she">...</span></p>
+      <p>FOO: <span id="foo">...</span></p>
+      <p>EMR: <span id="emr">...</span></p>
     </div>
   </div>
 
   <!-- RECENT LEDGER -->
   <div class="card">
-    <h2>Recent Mercy Ledger (Sample)</h2>
+    <h2>Recent Mercy Ledger</h2>
     <table>
-      <tr>
-        <th>Date</th>
-        <th>Recipient</th>
-        <th>Category</th>
-        <th>Amount</th>
-      </tr>
-      <tr>
-        <td>--</td>
-        <td>No entries yet</td>
-        <td>---</td>
-        <td>---</td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Recipient</th>
+          <th>Category</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody id="ledgerTable"></tbody>
     </table>
   </div>
 
   <!-- PATTERN INSIGHT -->
   <div class="card">
     <h2>Pattern Insight</h2>
-    <p>No patterns recorded yet. System is in initialization phase.</p>
+    <p id="patternText">Loading patterns...</p>
   </div>
 
 </div>
@@ -130,6 +122,55 @@
 <footer>
   Mercy ARM System • Stewardship Mode Active • No Automation Enabled
 </footer>
+
+<script>
+async function loadData() {
+  try {
+    const vault = await fetch('vault.json').then(r => r.json());
+    const signals = await fetch('signals.json').then(r => r.json());
+    const ledger = await fetch('ledger.json').then(r => r.json());
+
+    // Vault calculations
+    const floor = vault.balance * (vault.preservation_floor_percent / 100);
+    const available = vault.balance - floor;
+
+    document.getElementById("balance").innerText = "₦" + vault.balance;
+    document.getElementById("floor").innerText = "₦" + floor;
+    document.getElementById("available").innerText = "₦" + available;
+
+    // Signals
+    document.getElementById("med").innerText = signals.MED;
+    document.getElementById("edu").innerText = signals.EDU;
+    document.getElementById("she").innerText = signals.SHE;
+    document.getElementById("foo").innerText = signals.FOO;
+    document.getElementById("emr").innerText = signals.EMR;
+
+    // Ledger
+    const table = document.getElementById("ledgerTable");
+    table.innerHTML = "";
+
+    ledger.forEach(item => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${item.date}</td>
+        <td>${item.recipient}</td>
+        <td>${item.category}</td>
+        <td>₦${item.amount}</td>
+      `;
+      table.appendChild(row);
+    });
+
+    // Pattern placeholder (Phase 4 upgrade later)
+    document.getElementById("patternText").innerText =
+      "Pattern engine inactive (Phase 4 upgrade pending).";
+
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+loadData();
+</script>
 
 </body>
 </html>
