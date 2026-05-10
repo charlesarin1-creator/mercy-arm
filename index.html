@@ -155,10 +155,11 @@
 
 <script>
 async function loadData() {
+
   const vault = await fetch('vault.json').then(r => r.json());
-  const signals = await fetch('signals.json').then(r => r.json());
   const ledger = await fetch('ledger.json').then(r => r.json());
 
+  // VAULT
   const floor = vault.balance * (vault.preservation_floor_percent / 100);
   const available = vault.balance - floor;
 
@@ -166,16 +167,27 @@ async function loadData() {
   document.getElementById("floor").innerText = "₦" + floor;
   document.getElementById("available").innerText = "₦" + available;
 
-  document.getElementById("med").innerText = signals.MED;
-  document.getElementById("edu").innerText = signals.EDU;
-  document.getElementById("she").innerText = signals.SHE;
-  document.getElementById("foo").innerText = signals.FOO;
-  document.getElementById("emr").innerText = signals.EMR;
+  // CATEGORY COUNTS
+  let counts = {
+    MED: 0,
+    EDU: 0,
+    SHE: 0,
+    FOO: 0,
+    EMR: 0
+  };
 
+  // LEDGER TABLE
   const table = document.getElementById("ledgerTable");
   table.innerHTML = "";
 
   ledger.forEach(item => {
+
+    // Count categories
+    if (counts[item.category] !== undefined) {
+      counts[item.category]++;
+    }
+
+    // Add rows
     const row = document.createElement("tr");
     row.innerHTML = `
       <td>${item.date}</td>
@@ -186,8 +198,47 @@ async function loadData() {
     table.appendChild(row);
   });
 
-  document.getElementById("patternText").innerText =
-    "Pattern engine inactive (Phase 4 pending).";
+  // SIGNAL LOGIC
+  function signalLevel(count) {
+    if (count >= 3) return "RED";
+    if (count >= 2) return "YELLOW";
+    return "GREEN";
+  }
+
+  // APPLY SIGNALS
+  const medSignal = signalLevel(counts.MED);
+  const eduSignal = signalLevel(counts.EDU);
+  const sheSignal = signalLevel(counts.SHE);
+  const fooSignal = signalLevel(counts.FOO);
+  const emrSignal = signalLevel(counts.EMR);
+
+  document.getElementById("med").innerText = medSignal;
+  document.getElementById("edu").innerText = eduSignal;
+  document.getElementById("she").innerText = sheSignal;
+  document.getElementById("foo").innerText = fooSignal;
+  document.getElementById("emr").innerText = emrSignal;
+
+  // PATTERN ENGINE
+  let insights = [];
+
+  if (counts.MED >= 2) {
+    insights.push("Medical requests increasing.");
+  }
+
+  if (counts.SHE >= 2) {
+    insights.push("Shelter instability pattern detected.");
+  }
+
+  if (counts.EDU >= 2) {
+    insights.push("Education support requests rising.");
+  }
+
+  if (insights.length === 0) {
+    insights.push("No major structural patterns detected.");
+  }
+
+  document.getElementById("patternText").innerHTML =
+    insights.join("<br>");
 }
 
 loadData();
