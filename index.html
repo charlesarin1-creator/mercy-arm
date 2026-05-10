@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MERCY ARM DASHBOARD</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f6f6f6;
+      margin: 0;
+      padding: 0;
+      color: #111;
+    }
+
+    header {
+      background: #111;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .card {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .status {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .green { color: green; }
+    .yellow { color: goldenrod; }
+    .red { color: red; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: #777;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>MERCY ARM DASHBOARD</h1>
+  <p>James 1:27 Stewardship System</p>
+</header>
+
+<div class="container">
+
+  <!-- VAULT STATUS -->
+  <div class="card">
+    <h2>Mercy Vault Status</h2>
+    <p><strong>Balance:</strong> ₦15,320</p>
+    <p><strong>Preservation Floor (30%):</strong> ₦4,596</p>
+    <p><strong>Available for Mercy:</strong> ₦10,724</p>
+    <p class="status yellow">Status: STABLE</p>
+  </div>
+
+  <!-- SIGNAL PANEL -->
+  <div class="card">
+    <h2>Mercy Signal Board</h2>
+    <div class="grid">
+      <p>MED: <span class="yellow">YELLOW</span></p>
+      <p>EDU: <span class="green">GREEN</span></p>
+      <p>SHE: <span class="red">RED</span></p>
+      <p>FOO: <span class="green">GREEN</span></p>
+      <p>EMR: <span class="yellow">YELLOW</span></p>
+    </div>
+  </div>
+
+  <!-- RECENT LEDGER -->
+  <div class="card">
+    <h2>Recent Mercy Ledger (Sample)</h2>
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Recipient</th>
+        <th>Category</th>
+        <th>Amount</th>
+      </tr>
+      <tr>
+        <td>--</td>
+        <td>No entries yet</td>
+        <td>---</td>
+        <td>---</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- PATTERN INSIGHT -->
+  <div class="card">
+    <h2>Pattern Insight</h2>
+    <p>No patterns recorded yet. System is in initialization phase.</p>
+  </div>
+
+</div>
+
+<footer>
+  Mercy ARM System • Stewardship Mode Active • No Automation Enabled
+</footer>
+
+</body>
+</html>
