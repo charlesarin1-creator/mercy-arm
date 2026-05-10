@@ -170,8 +170,24 @@ nav a:hover {
       <tbody id="ledgerTable"></tbody>
     </table>
   </div>
+<!-- ANALYTICS -->
+<div class="card">
+  <h2>Mercy Analytics</h2>
 
-  <!-- PATTERNS -->
+  <p><strong>Total Cases:</strong> <span id="totalCases">0</span></p>
+
+  <p><strong>Total Distributed:</strong>
+    <span id="totalAmount">₦0</span>
+  </p>
+
+  <p><strong>Repeat Recipients:</strong>
+    <span id="repeatCount">0</span>
+  </p>
+
+  <p><strong>Vault Pressure:</strong>
+    <span id="vaultPressure">Stable</span>
+  </p>
+</diTTERN-- PATTERNS -->
   <div class="card">
     <h2>Pattern Insight</h2>
     <p id="patternText">Loading pattern intelligence...</p>
@@ -216,7 +232,15 @@ async function loadData() {
     if (counts[item.category] !== undefined) {
       counts[item.category]++;
     }
+// Total distributed
+totalAmount += item.amount;
 
+// Track recipients
+if (recipientTracker[item.recipient]) {
+  recipientTracker[item.recipient]++;
+} else {
+  recipientTracker[item.recipient] = 1;
+}
     // Add rows
     const row = document.createElement("tr");
     row.innerHTML = `
@@ -261,7 +285,10 @@ applySignal("edu", eduSignal);
 applySignal("she", sheSignal);
 applySignal("foo", fooSignal);
 applySignal("emr", emrSignal);
-  // PATTERN ENGINE
+  // PA// ANALYTICS
+let totalAmount = 0;
+let recipientTracker = {};
+let repeatRecipients = 0;TTERN ENGINE
   let insights = [];
 
   if (counts.MED >= 2) {
@@ -275,11 +302,42 @@ applySignal("emr", emrSignal);
   if (counts.EDU >= 2) {
     insights.push("Education support requests rising.");
   }
+// Repeat recipient detection
+Object.values(recipientTracker).forEach(count => {
+  if (count > 1) {
+    repeatRecipients++;
+  }
+});
 
+// Dependency insight
+if (repeatRecipients > 0) {
+  insights.push("Repeat recipient pattern detected.");
+}
   if (insights.length === 0) {
     insights.push("No major structural patterns detected.");
   }
+// ANALYTICS OUTPUT
+document.getElementById("totalCases").innerText = ledger.length;
 
+document.getElementById("totalAmount").innerText =
+  "₦" + totalAmount;
+
+document.getElementById("repeatCount").innerText =
+  repeatRecipients;
+
+// Vault pressure
+let vaultStatus = "Stable";
+
+if (available < floor * 1.2) {
+  vaultStatus = "Warning";
+}
+
+if (available <= floor) {
+  vaultStatus = "Critical";
+}
+
+document.getElementById("vaultPressure").innerText =
+  vaultStatus;
   document.getElementById("patternText").innerHTML =
     insights.join("<br>");
 }
