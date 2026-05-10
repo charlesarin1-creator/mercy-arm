@@ -1,0 +1,12 @@
+[
+  {
+    "date": "2026-05-10",
+    "recipient": "Sample Widow",
+    "category": "SHE",
+    "amount": 5000,
+    "purpose": "Rent support",
+    "verification": "Manual confirmation",
+    "exception": false,
+    "impact_note": "Temporary shelter secured"
+  }
+]
