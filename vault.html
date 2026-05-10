@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MERCY ARM VAULT</title>
+
+  <style>
+    :root {
+      --gold: #C8A24A;
+      --navy: #0F1B2D;
+      --green: #2E7D5B;
+      --red: #B3261E;
+      --gray: #F4F4F4;
+      --text: #2B2B2B;
+    }
+
+    body {
+      margin: 0;
+      background: var(--gray);
+      font-family: Arial, sans-serif;
+      color: var(--text);
+    }
+
+    header {
+      background: var(--navy);
+      color: white;
+      padding: 25px;
+      text-align: center;
+      border-bottom: 4px solid var(--gold);
+    }
+
+    nav {
+      background: var(--gold);
+      padding: 12px;
+      text-align: center;
+    }
+
+    nav a {
+      color: var(--navy);
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-left: 5px solid var(--gold);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: var(--navy);
+    }
+
+    .value {
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .green {
+      color: var(--green);
+    }
+
+    .yellow {
+      color: var(--gold);
+    }
+
+    .red {
+      color: var(--red);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #777;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>MERCY ARM VAULT</h1>
+  <p>Vault Preservation & Liquidity Monitoring</p>
+</header>
+
+<nav>
+  <a href="index.html">Dashboard</a>
+  <a href="vault.html">Vault</a>
+  <a href="signals.html">Signals</a>
+  <a href="ledger.html">Ledger</a>
+  <a href="charter.html">Charter</a>
+  <a href="console.html">Console</a>
+</nav>
+
+<div class="container">
+
+  <div class="card">
+    <h2>Total Vault Balance</h2>
+    <div class="value" id="balance">Loading...</div>
+  </div>
+
+  <div class="card">
+    <h2>Preservation Floor</h2>
+    <div class="value yellow" id="floor">Loading...</div>
+  </div>
+
+  <div class="card">
+    <h2>Available Allocation Capacity</h2>
+    <div class="value green" id="available">Loading...</div>
+  </div>
+
+  <div class="card">
+    <h2>Vault Integrity Status</h2>
+    <div class="value" id="status">Loading...</div>
+  </div>
+
+</div>
+
+<footer>
+  Mercy ARM Vault • Preservation Protocol Active
+</footer>
+
+<script>
+
+async function loadVault() {
+
+  const vault =
+    await fetch('vault.json').then(r => r.json());
+
+  const floor =
+    vault.balance *
+    (vault.preservation_floor_percent / 100);
+
+  const available =
+    vault.balance - floor;
+
+  document.getElementById("balance").innerText =
+    "₦" + vault.balance;
+
+  document.getElementById("floor").innerText =
+    "₦" + floor;
+
+  document.getElementById("available").innerText =
+    "₦" + available;
+
+  let status = "STABLE";
+  let className = "green";
+
+  if (available < floor * 1.2) {
+    status = "WARNING";
+    className = "yellow";
+  }
+
+  if (available <= floor) {
+    status = "CRITICAL";
+    className = "red";
+  }
+
+  const statusEl =
+    document.getElementById("status");
+
+  statusEl.innerText = status;
+  statusEl.className = "value " + className;
+}
+
+loadVault();
+
+</script>
+
+</body>
+</html>
