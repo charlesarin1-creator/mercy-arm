@@ -10,5 +10,6 @@
     "status": "PENDING_REVIEW",
     "priority": "NORMAL",
     "decision_note": ""
+    "notification": "" 
   }
 ]
