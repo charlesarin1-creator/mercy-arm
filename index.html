@@ -1,39 +1,42 @@
-hrefCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MERCY ARM DASHBOARD</title>
+  <title>MERCY ARM</title>
 
   <style>
     :root {
       --gold: #C8A24A;
       --navy: #0F1B2D;
-      --green: #2E7D5B;
-      --red: #B3261E;
       --gray: #F4F4F4;
       --text: #2B2B2B;
     }
 
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
       background: var(--gray);
-      margin: 0;
-      padding: 0;
       color: var(--text);
     }
 
     header {
       background: var(--navy);
       color: white;
-      padding: 20px;
+      padding: 30px 20px;
       text-align: center;
       border-bottom: 4px solid var(--gold);
     }
 
     header h1 {
       margin: 0;
+      font-size: 28px;
       letter-spacing: 2px;
+    }
+
+    header p {
+      margin-top: 10px;
+      opacity: 0.85;
     }
 
     nav {
@@ -45,88 +48,61 @@ hrefCTYPE html>
     nav a {
       color: var(--navy);
       text-decoration: none;
-      margin: 0 15px;
+      margin: 0 12px;
       font-weight: bold;
-    }
-
-    nav a:hover {
-      opacity: 0.7;
+      font-size: 14px;
     }
 
     .container {
-      padding: 20px;
-      max-width: 1000px;
+      max-width: 900px;
       margin: auto;
+      padding: 20px;
     }
 
     .card {
       background: white;
-      padding: 15px;
+      padding: 20px;
       margin-bottom: 15px;
       border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       border-left: 5px solid var(--gold);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
-    .card h2 {
+    h2 {
+      color: var(--navy);
       margin-top: 0;
+    }
+
+    .big-number {
+      font-size: 28px;
+      font-weight: bold;
       color: var(--navy);
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .green {
-      color: var(--green);
-      font-weight: bold;
-    }
-
-    .yellow {
-      color: var(--gold);
-      font-weight: bold;
-    }
-
-    .red {
-      color: var(--red);
-      font-weight: bold;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th {
+    .button {
+      display: inline-block;
       background: var(--navy);
       color: white;
-      text-align: left;
-      padding: 8px;
+      padding: 12px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 10px;
     }
 
-    td {
-      padding: 8px;
-      border-bottom: 1px solid #ddd;
+    .button:hover {
+      opacity: 0.9;
+    }
+
+    ul {
+      padding-left: 18px;
     }
 
     footer {
       text-align: center;
       padding: 20px;
       font-size: 12px;
-      color: #666;
-    }
-
-    @media (max-width: 768px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      nav a {
-        display: inline-block;
-        margin: 5px 10px;
-      }
+      color: #777;
     }
   </style>
 </head>
@@ -135,300 +111,100 @@ hrefCTYPE html>
 
 <header>
   <h1>MERCY ARM</h1>
-  <p>Stewardship System • James 1:27</p>
+  <p>A structured mercy system for widows and orphans</p>
 </header>
 
 <nav>
-  <a href="requests.html">Queue</a>
-  <a href="index.html">Dashboard</a>
-  <a href="vault.html">Vault</a>
-  <a href="signals.html">Signals</a>
-  <a href="ledger.html">Ledger</a>
-  <a href="charter.html">Charter</a>
-  <a href="request.html">Request Mercy</a>
+  <a href="index.html">Home</a>
+  <a href="charter.html">What We Do</a>
+  <a href="request.html">Request Help</a>
+  <a href="requests.html">Queue Status</a>
 </nav>
 
 <div class="container">
 
-  <!-- VAULT -->
   <div class="card">
-    <h2>Mercy Vault</h2>
-
+    <h2>What is Mercy ARM?</h2>
     <p>
-      <strong>Balance:</strong>
-      <span id="balance">Loading...</span>
+      Mercy ARM is a structured mercy support system designed to provide
+      assistance to widows and orphans in real distress.
     </p>
-
     <p>
-      <strong>Preservation Floor:</strong>
-      <span id="floor">Loading...</span>
-    </p>
-
-    <p>
-      <strong>Available:</strong>
-      <span id="available">Loading...</span>
+      It is built on accountability, simplicity, and governed compassion.
     </p>
   </div>
 
-  <!-- SYSTEM STATUS -->
   <div class="card">
-    <h2>System Status</h2>
-
-    <p><strong>Mode:</strong> Manual Stewardship</p>
-    <p><strong>Automation:</strong> Disabled</p>
-    <p><strong>Witness Review:</strong> Pending</p>
-    <p><strong>System Integrity:</strong> Active</p>
+    <h2>Who Can Receive Help?</h2>
+    <ul>
+      <li>Widows without financial support</li>
+      <li>Orphans under 18 without parental care</li>
+    </ul>
+    <p>No other categories are accepted at this stage.</p>
   </div>
 
-  <!-- SIGNALS -->
   <div class="card">
-    <h2>Mercy Signal Board</h2>
-
-    <div class="grid">
-      <p>MED: <span id="med"></span></p>
-      <p>EDU: <span id="edu"></span></p>
-      <p>SHE: <span id="she"></span></p>
-      <p>FOO: <span id="foo"></span></p>
-      <p>EMR: <span id="emr"></span></p>
-    </div>
+    <h2>How It Works</h2>
+    <ul>
+      <li>Submit a request</li>
+      <li>Your case enters review queue</li>
+      <li>Verification is done internally</li>
+      <li>Approved cases are contacted directly</li>
+    </ul>
   </div>
 
-  <!-- LEDGER -->
   <div class="card">
-    <h2>Mercy Ledger</h2>
+    <h2>Current System Activity</h2>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Recipient</th>
-          <th>Category</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
+    <p>Active Requests in Queue:</p>
+    <div class="big-number" id="queueCount">Loading...</div>
 
-      <tbody id="ledgerTable"></tbody>
-    </table>
+    <a class="button" href="request.html">
+      Submit a Request
+    </a>
   </div>
 
-  <!-- ANALYTICS -->
   <div class="card">
-    <h2>Mercy Analytics</h2>
-
+    <h2>Transparency Commitment</h2>
     <p>
-      <strong>Total Cases:</strong>
-      <span id="totalCases">0</span>
-    </p>
-
-    <p>
-      <strong>Total Distributed:</strong>
-      <span id="totalAmount">₦0</span>
-    </p>
-
-    <p>
-      <strong>Repeat Recipients:</strong>
-      <span id="repeatCount">0</span>
-    </p>
-
-    <p>
-      <strong>Vault Pressure:</strong>
-      <span id="vaultPressure">Stable</span>
-    </p>
-  </div>
-
-  <!-- PATTERNS -->
-  <div class="card">
-    <h2>Pattern Insight</h2>
-
-    <p id="patternText">
-      Loading pattern intelligence...
+      Mercy ARM operates with structured accountability.
+      Financial operations are governed internally.
     </p>
   </div>
 
 </div>
 
 <footer>
-  Mercy ARM System • Covenant Structure Active • No Automation Authority
+  Mercy ARM • Structured Compassion System
 </footer>
 
 <script>
-async function loadData() {
+
+async function loadQueueCount() {
 
   try {
 
-    const vault = await fetch('vault.json').then(r => r.json());
-    const ledger = await fetch('ledger.json').then(r => r.json());
+    const requests =
+      await fetch("requests.json")
+      .then(r => r.json());
 
-    // VAULT
-    const floor =
-      vault.balance * (vault.preservation_floor_percent / 100);
+    const pending =
+      requests.filter(r =>
+        r.status === "PENDING_REVIEW"
+      ).length;
 
-    const available =
-      vault.balance - floor;
+    document.getElementById("queueCount")
+      .innerText = pending;
 
-    document.getElementById("balance").innerText =
-      "₦" + vault.balance;
+  } catch (e) {
 
-    document.getElementById("floor").innerText =
-      "₦" + floor;
-
-    document.getElementById("available").innerText =
-      "₦" + available;
-
-    // CATEGORY COUNTS
-    let counts = {
-      MED: 0,
-      EDU: 0,
-      SHE: 0,
-      FOO: 0,
-      EMR: 0
-    };
-
-    // ANALYTICS
-    let totalAmount = 0;
-    let recipientTracker = {};
-    let repeatRecipients = 0;
-
-    // LEDGER TABLE
-    const table =
-      document.getElementById("ledgerTable");
-
-    table.innerHTML = "";
-
-    ledger.forEach(item => {
-
-      // CATEGORY COUNT
-      if (counts[item.category] !== undefined) {
-        counts[item.category]++;
-      }
-
-      // TOTAL DISTRIBUTED
-      totalAmount += item.amount;
-
-      // RECIPIENT TRACKING
-      if (recipientTracker[item.recipient]) {
-        recipientTracker[item.recipient]++;
-      } else {
-        recipientTracker[item.recipient] = 1;
-      }
-
-      // ADD ROW
-      const row = document.createElement("tr");
-
-      row.innerHTML = `
-        <td>${item.date}</td>
-        <td>${item.recipient}</td>
-        <td>${item.category}</td>
-        <td>₦${item.amount}</td>
-      `;
-
-      table.appendChild(row);
-    });
-
-    // SIGNAL LOGIC
-    function signalLevel(count) {
-      if (count >= 3) return "RED";
-      if (count >= 2) return "YELLOW";
-      return "GREEN";
-    }
-
-    const medSignal = signalLevel(counts.MED);
-    const eduSignal = signalLevel(counts.EDU);
-    const sheSignal = signalLevel(counts.SHE);
-    const fooSignal = signalLevel(counts.FOO);
-    const emrSignal = signalLevel(counts.EMR);
-
-    // APPLY SIGNAL COLORS
-    function applySignal(id, value) {
-
-      const el =
-        document.getElementById(id);
-
-      el.innerText = value;
-
-      if (value === "RED") {
-        el.className = "red";
-      } else if (value === "YELLOW") {
-        el.className = "yellow";
-      } else {
-        el.className = "green";
-      }
-    }
-
-    applySignal("med", medSignal);
-    applySignal("edu", eduSignal);
-    applySignal("she", sheSignal);
-    applySignal("foo", fooSignal);
-    applySignal("emr", emrSignal);
-
-    // PATTERN ENGINE
-    let insights = [];
-
-    if (counts.MED >= 2) {
-      insights.push("Medical requests increasing.");
-    }
-
-    if (counts.SHE >= 2) {
-      insights.push("Shelter instability pattern detected.");
-    }
-
-    if (counts.EDU >= 2) {
-      insights.push("Education support requests rising.");
-    }
-
-    // REPEAT RECIPIENT DETECTION
-    Object.values(recipientTracker).forEach(count => {
-      if (count > 1) {
-        repeatRecipients++;
-      }
-    });
-
-    if (repeatRecipients > 0) {
-      insights.push("Repeat recipient pattern detected.");
-    }
-
-    if (insights.length === 0) {
-      insights.push("No major structural patterns detected.");
-    }
-
-    // ANALYTICS OUTPUT
-    document.getElementById("totalCases").innerText =
-      ledger.length;
-
-    document.getElementById("totalAmount").innerText =
-      "₦" + totalAmount;
-
-    document.getElementById("repeatCount").innerText =
-      repeatRecipients;
-
-    // VAULT PRESSURE
-    let vaultStatus = "Stable";
-
-    if (available < floor * 1.2) {
-      vaultStatus = "Warning";
-    }
-
-    if (available <= floor) {
-      vaultStatus = "Critical";
-    }
-
-    document.getElementById("vaultPressure").innerText =
-      vaultStatus;
-
-    // PATTERN OUTPUT
-    document.getElementById("patternText").innerHTML =
-      insights.join("<br>");
-
-  } catch (error) {
-
-    console.log(error);
-
-    document.getElementById("patternText").innerText =
-      "Error loading Mercy ARM data.";
+    document.getElementById("queueCount")
+      .innerText = "0";
   }
 }
 
-loadData();
+loadQueueCount();
+
 </script>
 
 </body>
