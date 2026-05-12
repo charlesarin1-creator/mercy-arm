@@ -2,14 +2,66 @@
   {
     "id": "REQ-001",
     "date": "2026-05-10",
-    "name": "Sample Request",
+    "name": "Amina Yusuf",
     "category": "MED",
-    "location": "Onitsha",
-    "description": "Medical support needed for treatment.",
-    "contact": "08000000000",
+    "location": "Abuja",
+    "description": "Urgent medical support needed for treatment and medication.",
+    "contact": "08000000001",
+    "status": "PENDING_REVIEW",
+    "priority": "HIGH",
+    "decision_note": "",
+    "notification": ""
+  },
+  {
+    "id": "REQ-002",
+    "date": "2026-05-09",
+    "name": "Grace Okoro",
+    "category": "EDU",
+    "location": "Enugu",
+    "description": "School fee support for two children after loss of husband.",
+    "contact": "08000000002",
     "status": "PENDING_REVIEW",
     "priority": "NORMAL",
-    "decision_note": ""
-    "notification": "" 
+    "decision_note": "",
+    "notification": ""
+  },
+  {
+    "id": "REQ-003",
+    "date": "2026-05-08",
+    "name": "Samuel Nwafor (Guardian)",
+    "category": "SHE",
+    "location": "Onitsha",
+    "description": "Widow struggling with rent arrears and eviction notice.",
+    "contact": "08000000003",
+    "status": "UNDER_REVIEW",
+    "priority": "HIGH",
+    "decision_note": "Case escalated for urgent review",
+    "notification": ""
+  },
+  {
+    "id": "REQ-004",
+    "date": "2026-05-07",
+    "name": "Hauwa Musa",
+    "category": "FOO",
+    "location": "Kaduna",
+    "description": "Food support for widow with three children, no income.",
+    "contact": "08000000004",
+    "status": "APPROVED",
+    "priority": "HIGH",
+    "decision_note": "Approved for immediate support",
+    "notification": "MERCY ARM NOTIFICATION\n\nDear Hauwa Musa,\n\nYour request has been reviewed and APPROVED.\n\nCategory: FOO\nLocation: Kaduna\n\nNext Step: You will be contacted with support instructions shortly.\n\n— Mercy ARM System"
+  },
+  {
+    "id": "REQ-005",
+    "date": "2026-05-06",
+    "name": "Ifeanyi Chukwu",
+    "category": "EMR",
+    "location": "Lagos",
+    "description": "Emergency hospital admission support after accident.",
+    "contact": "08000000005",
+    "status": "REJECTED",
+    "priority": "HIGH",
+    "decision_note": "Insufficient verification of eligibility",
+    "notification": ""
   }
 ]
