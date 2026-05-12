@@ -148,28 +148,85 @@
 let requests = [];
 
 async function loadRequests() {
-
   try {
-
-    requests =
-      await fetch("requests.json")
-      .then(r => r.json());
-
+    requests = await fetch("requests.json").then(r => r.json());
   } catch (e) {
-
     requests = [];
   }
+  renderRequests();
+}
+
+/* -----------------------------
+   NOTIFICATION ENGINE
+------------------------------*/
+function generateNotification(request) {
+
+  return `
+MERCY ARM NOTIFICATION
+
+Dear ${request.name},
+
+Your request has been reviewed and APPROVED.
+
+Category: ${request.category}
+Location: ${request.location}
+
+Next Step:
+You will be contacted with support instructions shortly.
+
+This decision is governed under the Mercy ARM stewardship system (James 1:27).
+
+— Mercy ARM System
+  `.trim();
+}
+
+/* -----------------------------
+   STATUS UPDATE ENGINE
+------------------------------*/
+async function updateStatus(id, newStatus) {
+
+  let updatedRequests = requests.map(r => {
+
+    if (r.id === id) {
+
+      let updated = {
+        ...r,
+        status: newStatus,
+        decision_note:
+          newStatus === "APPROVED"
+            ? "Approved for disbursement"
+            : newStatus === "REJECTED"
+            ? "Not eligible under current rules"
+            : "Under review"
+      };
+
+      if (newStatus === "APPROVED") {
+        updated.notification = generateNotification(updated);
+      }
+
+      return updated;
+    }
+
+    return r;
+  });
+
+  requests = updatedRequests;
+
+  console.log("UPDATED REQUESTS JSON:");
+  console.log(JSON.stringify(requests, null, 2));
+
+  alert("Status updated. Copy updated JSON from console and paste into requests.json");
 
   renderRequests();
 }
 
+/* -----------------------------
+   RENDER ENGINE
+------------------------------*/
 function renderRequests() {
 
-  const filter =
-    document.getElementById("filter").value;
-
-  const list =
-    document.getElementById("list");
+  const filter = document.getElementById("filter").value;
+  const list = document.getElementById("list");
 
   list.innerHTML = "";
 
@@ -179,68 +236,45 @@ function renderRequests() {
       : requests.filter(r => r.category === filter);
 
   if (filtered.length === 0) {
-    list.innerHTML =
-      "<div class='empty'>No requests found.</div>";
+    list.innerHTML = "<div class='empty'>No requests found.</div>";
     return;
   }
 
   filtered.forEach(r => {
 
-    const div =
-      document.createElement("div");
-
+    const div = document.createElement("div");
     div.className = "request";
 
     div.innerHTML = `
-  <span class="tag ${r.category}">
-    ${r.category}
-  </span>
+      <span class="tag ${r.category}">${r.category}</span>
 
-  <div><strong>${r.name}</strong></div>
+      <div><strong>${r.name}</strong></div>
 
-  <div class="meta">
-    ${r.location} • ${r.date}
-  </div>
+      <div class="meta">${r.location} • ${r.date}</div>
 
-  <div class="meta">
-    ${r.description}
-  </div>
+      <div class="meta">${r.description}</div>
 
-  <div class="meta">
-    <strong>Status:</strong> ${r.status}
-  </div>
+      <div class="meta"><strong>Status:</strong> ${r.status}</div>
 
-  <button onclick="updateStatus('${r.id}', 'UNDER_REVIEW')">Mark Under Review</button>
-  <button onclick="updateStatus('${r.id}', 'APPROVED')">Approve</button>
-  <button onclick="updateStatus('${r.id}', 'REJECTED')">Reject</button>
-`;
+      <div class="meta">
+        <strong>Notification:</strong>
+        <pre style="white-space:pre-wrap;background:#f4f4f4;padding:10px;border-radius:6px;">
+${r.notification || "No notification generated yet"}
+        </pre>
+      </div>
+
+      <div style="margin-top:10px;">
+        <button onclick="updateStatus('${r.id}', 'UNDER_REVIEW')">Under Review</button>
+        <button onclick="updateStatus('${r.id}', 'APPROVED')">Approve</button>
+        <button onclick="updateStatus('${r.id}', 'REJECTED')">Reject</button>
+      </div>
+    `;
 
     list.appendChild(div);
   });
 }
 
 loadRequests();
-  function generateNotification(request) {
-
-  const baseMessage =
-`MERCY ARM NOTIFICATION
-
-Dear ${request.name},
-
-Your request has been reviewed and approved under the Mercy ARM stewardship system.
-
-Category: ${request.category}
-Location: ${request.location}
-
-Next Step:
-You will be contacted directly with support instructions. Please ensure your contact details remain active.
-
-This is a structured mercy response governed under James 1:27.
-
-— Mercy ARM System`;
-
-  return baseMessage;
-}
 
 </script>
  async function updateStatus(id, newStatus) {
