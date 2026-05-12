@@ -220,6 +220,27 @@ function renderRequests() {
 }
 
 loadRequests();
+  function generateNotification(request) {
+
+  const baseMessage =
+`MERCY ARM NOTIFICATION
+
+Dear ${request.name},
+
+Your request has been reviewed and approved under the Mercy ARM stewardship system.
+
+Category: ${request.category}
+Location: ${request.location}
+
+Next Step:
+You will be contacted directly with support instructions. Please ensure your contact details remain active.
+
+This is a structured mercy response governed under James 1:27.
+
+— Mercy ARM System`;
+
+  return baseMessage;
+}
 
 </script>
  async function updateStatus(id, newStatus) {
